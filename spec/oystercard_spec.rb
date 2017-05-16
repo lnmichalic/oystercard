@@ -33,13 +33,16 @@ end
 
 describe '#in_journey?' do
 	it 'returns false when oystercard initialized' do
+
 		expect(oystercard.in_journey?).to eq false
 	end
 	it 'returns true when oystercard is touched in' do
+		oystercard.top_up 90
 		oystercard.touch_in
 		expect(oystercard.in_journey?).to eq true
 	end
 	it 'returns false when oystercard is touched out' do
+		oystercard.top_up 90
 		oystercard.touch_in
 		oystercard.touch_out
 		expect(oystercard.in_journey?).to eq false
@@ -47,8 +50,17 @@ describe '#in_journey?' do
 end
 
 describe '#touch_in' do
-	it 'returns true' do
+	it 'Allows touch in when sufficient credit present' do
+		oystercard.top_up 90
 		expect(oystercard.touch_in).to eq true
+	end
+	it 'Raises an error when balance below £1' do
+		expect{oystercard.touch_in}.to raise_error "Balance too low : Top up Please"
+	end
+	it 'Raises an error when topped up and balance goes below £1' do
+		oystercard.top_up 10
+		oystercard.deduct 10
+		expect{oystercard.touch_in}.to raise_error "Balance too low : Top up Please"
 	end
 end
 

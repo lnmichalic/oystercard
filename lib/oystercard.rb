@@ -3,8 +3,9 @@ class Oystercard
   alias_method :in_journey?, :in_journey
 
   MAXIMUM_BALANCE = 90
+  MINIMUM_BALANCE = 1
 
-  def initialize()
+  def initialize
     @balance = 0
     @in_journey = false
   end
@@ -19,6 +20,7 @@ class Oystercard
   end
 
   def touch_in
+  	fail "Balance too low : Top up Please" if @balance < MINIMUM_BALANCE
     @in_journey = true
   end
 
@@ -27,3 +29,13 @@ class Oystercard
   end
 
 end
+
+# oystercard = Oystercard.new
+# # p oystercard.touch_in
+# p oystercard.balance
+# p oystercard.top_up 10
+# p oystercard.touch_in 
+# p oystercard.deduct 9
+# p oystercard.touch_in
+# p oystercard.deduct 1
+# p oystercard.touch_in
