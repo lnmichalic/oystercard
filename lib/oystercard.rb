@@ -1,6 +1,7 @@
 class Oystercard
-  attr_reader :balance, :in_journey
-  alias_method :in_journey?, :in_journey
+  
+  attr_reader :balance, :station
+  
 
   MAXIMUM_BALANCE = 90
   MINIMUM_BALANCE = 1
@@ -15,14 +16,19 @@ class Oystercard
     @balance += amount
   end
 
-  def touch_in
+  def touch_in(station)
   	fail "Balance too low : Top up Please" if @balance < MINIMUM_BALANCE
+  	@station = station
     @in_journey = true
+  end
+
+  def in_journey?
+  	!!station
   end
 
   def touch_out
     deduct(MINIMUM_BALANCE)
-    @in_journey = false
+    @station = nil
   end
 
   private
@@ -32,3 +38,20 @@ class Oystercard
   end
 
 end
+
+
+# oystercard = Oystercard.new
+# p oystercard.top_up 90
+# p oystercard.touch_in "Fulham"
+# p oystercard.station
+# p oystercard.touch_out
+
+# p oystercard.balance
+# p oystercard.station
+
+# p oystercard.touch_in station
+# p oystercard.station
+
+# p oystercard.station
+
+
