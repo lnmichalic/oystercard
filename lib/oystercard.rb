@@ -18,6 +18,7 @@ class Oystercard
 
   def touch_in(entry_station)
   	fail "Balance too low : Top up Please" if @balance < MINIMUM_BALANCE
+    # start_journey(entry_station)
   	@entry_station = entry_station
     @in_journey = true
   end
@@ -34,12 +35,16 @@ class Oystercard
     @exit_station
   end
 
-  def save_journey_to_list 
+  def save_journey_to_list
     @journey = Journey.new(entry_station, exit_station)
     @list_of_journeys << @journey
   end
 
   private
+
+  # def start_journey(entry_station, exit_station)
+  #   journey = Journey.new(entry_station, exit_station)
+  # end
 
   def deduct(amount)
     @balance -= amount
