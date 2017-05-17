@@ -6,5 +6,7 @@ class Journey
 		@exit_point = exit_point
 	end
 
-
+	def show_last_trip
+		self
+	end
 end

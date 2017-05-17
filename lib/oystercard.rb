@@ -1,6 +1,5 @@
 class Oystercard
-
-  attr_reader :balance, :entry_station, :exit_station, :in_journey, :list_of_journeys, :journey
+  attr_reader :balance, :entry_station, :exit_station, :in_journey,:list_of_journeys, :journey
 
   MAXIMUM_BALANCE = 90
   MINIMUM_BALANCE = 1
@@ -35,8 +34,8 @@ class Oystercard
     @exit_station
   end
 
-  def save_journey_to_list #need a unit test for this
-    @journey = {:entry_station => @entry_station, :exit_station => @exit_station}
+  def save_journey_to_list 
+    @journey = Journey.new(entry_station, exit_station)
     @list_of_journeys << @journey
   end
 
