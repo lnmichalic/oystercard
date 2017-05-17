@@ -47,3 +47,9 @@ class Oystercard
   end
 
 end
+
+# card = Oystercard.new
+# card.top_up(20)
+# card.touch_in('Aldgate')
+# p card.touch_out('Westminister')
+# p card.show_last_journey
