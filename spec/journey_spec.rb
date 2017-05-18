@@ -1,10 +1,10 @@
 require 'journey'
 
 describe Journey do
-  subject(:journey){ described_class.new("entry point","exit point")}
+  subject(:journey){ described_class.new("entry point")}
   let(:oystercard) {double("oystercard", touch_in: "entry station", touch_out: "exit station")}
   let(:oystercard2) {double("oystercard", touch_in: nil, touch_out: nil)}
-  let(:journey_with_no_touch_in) { described_class.new(nil ,"exit_point") }
+  let(:journey_with_no_touch_in) { described_class.new(nil) }
 
   it 'is a type of Journey' do
   expect(journey).to be_a Journey
@@ -14,18 +14,9 @@ describe Journey do
   expect(journey.entry_point).to eq "entry point"
   end
 
-  it 'has a ending point' do
-  expect(journey.exit_point).to eq "exit point"
-  end
-
-  describe '#journey' do
-
-    it 'stores a journey to list_of_journeys' do
-      oystercard.touch_in("entry_station")
-      oystercard.touch_out("exit_station")
-      expect(journey.show_last_trip).to be journey
-    end
-  end
+  # it 'has a ending point' do
+  # expect(journey.exit_point).to eq "exit point"
+  # end
 
   describe '#fare' do
     it 'calculates the fare' do
@@ -39,9 +30,14 @@ describe Journey do
       p @entry_point
       p journey_with_no_touch_in.entry_point
       expect(journey_with_no_touch_in.fare).to eq described_class::PENALTY_FARE
-
     end
   end
 
+  describe '#in_progress?' do
+    it 'returns true when journey is in progress' do
+      oystercard.touch_in("entry_station")
+      expect(journey).to be_in_progress
+    end
+  end
 
 end
